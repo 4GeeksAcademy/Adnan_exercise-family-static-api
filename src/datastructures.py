@@ -16,6 +16,20 @@ class FamilyStructure:
                 "last_name": last_name,
                 "age": 33,
                 "lucky_numbers": [7, 13, 22]
+            },
+            {
+                "id": self._generate_id(),
+                "first_name": "Jane",
+                "last_name": last_name,
+                "age": 35,
+                "lucky_numbers": [10, 14, 3]
+            },
+            {
+                "id": self._generate_id(),
+                "first_name": "Tommy",
+                "last_name": last_name,
+                "age": 5,
+                "lucky_numbers": [1]
             }
         ]
 
@@ -26,20 +40,31 @@ class FamilyStructure:
         return generated_id
 
     def add_member(self, member):
-        ## You have to implement this method
-        ## Append the member to the list of _members
-        pass
+        # member must be a dict
+        if not isinstance(member, dict):
+            raise ValueError("member must be a dictionary")
+
+        new_member = dict(member)  # copy input
+        new_member["id"] = self._generate_id()
+        new_member["last_name"] = self.last_name
+
+        self._members.append(new_member)
+        return new_member
 
     def delete_member(self, id):
-        ## You have to implement this method
-        ## Loop the list and delete the member with the given id
-        pass
+        for i, m in enumerate(self._members):
+            if m.get("id") == id:
+                self._members.pop(i)
+                return True
+        return False
 
     def get_member(self, id):
-        ## You have to implement this method
-        ## Loop all the members and return the one with the given id
-        pass
+        for m in self._members:
+            if m.get("id") == id:
+                return m
+        return None
 
     # This method is done, it returns a list with all the family members
     def get_all_members(self):
         return self._members
+
